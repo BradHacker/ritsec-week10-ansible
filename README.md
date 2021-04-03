@@ -48,7 +48,7 @@ RUN apt update && \
   DEBIAN_FRONTEND=noninteractive apt install -yq webmin
 ```
 
-\*Note: The `webmin` package has an interactive portion to the post-install script. So to avoid that, we need to specify `DEBIAN_FRONTEND=nointeractive` as well as `-yq` to apt so the container doesn't hang during the build process.
+_Note: The `webmin` package has an interactive portion to the post-install script. So to avoid that, we need to specify `DEBIAN_FRONTEND=nointeractive` as well as `-yq` to apt so the container doesn't hang during the build process._
 
 ### Step 3 - Expose container ports to the outside
 
