@@ -1,0 +1,50 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Docker GPG Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Docker APT Repo
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update and install Docker CE
+      apt:
+        name: docker-ce
+        update_cache: yes
+        state: latest
+
+    - name: Install pip
+      apt:
+        name: python3-pip
+        update_cache: yes
+        state: present
+
+    - name: Install docker compose python library
+      pip:
+        name: docker-compose
+
+    - name: Create webmin directory
+      file:
+        path: ~/webmin
+        state: directory
+
+    - name: Copy dockerfile
+      copy:
+        src: ../Dockerfile
+        dest: ~/webmin/Dockerfile
+
+    - name: Copy docker-compose
+      copy:
+        src: ../docker-compose.yml
+        dest: ~/webmin/docker-compose.yml
+
+    - name: Run docker compose
+      community.docker.docker_compose:
+        project_src: ~/webmin
+        state: present

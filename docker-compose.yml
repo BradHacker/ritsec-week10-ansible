@@ -1,0 +1,13 @@
+version: "3"
+services:
+  webmin:
+    build:
+      context: .
+    ports:
+      - "10000:10000"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
